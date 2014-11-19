@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private Context _context;
 	private List<String> _listDataHeader; // header titles
+	
+//	Mediator med = new Mediator();
 	// child data in format of header title, child title
 	private HashMap<String, List<String>> _listDataChild;
 
@@ -41,17 +44,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			boolean isLastChild, View convertView, ViewGroup parent) {
 
 		final String childText = (String) getChild(groupPosition, childPosition);
-
+		
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) this._context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.list_item, null);
 		}
-
+		
 		TextView txtListChild = (TextView) convertView
 				.findViewById(R.id.lblListItem);
 
 		txtListChild.setText(childText);
+	
 		return convertView;
 	}
 
@@ -85,12 +89,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.list_group, null);
 		}
+		
+	//	med.setGroup(headerTitle);
+	//	med.printExpandableGroup(convertView);
 
 		TextView lblListHeader = (TextView) convertView
 				.findViewById(R.id.lblListHeader);
 		lblListHeader.setTypeface(null, Typeface.BOLD);
 		lblListHeader.setText(headerTitle);
-
+		
+	
 		return convertView;
 	}
 

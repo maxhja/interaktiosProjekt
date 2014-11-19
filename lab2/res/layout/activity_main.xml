@@ -4,11 +4,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#f4f4f4" >
+   <EditText
+        android:id="@+id/textMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
 
-            <ExpandableListView
-                android:id="@+id/lvExp"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:cacheColorHint="#00000000"/>   
+        <requestFocus />
+    </EditText>
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000" />
+
+    
 
 </LinearLayout>
