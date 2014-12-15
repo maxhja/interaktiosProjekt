@@ -34,49 +34,44 @@ public class Mediator implements IMediator {
 		groupId = grp;
 	}
 	
-	@Override
-	public void printExpandable(ExpandableListAdapter view,View v, ViewGroup parent) {
-
-		//listDataHeader.indexOf(listDataChild.get(listDataHeader.get(groupId)).get(itemId));
-		System.out.println(itemId + " " + groupId);
-		
-		//View groupView = view.getGroupView(groupId, false, v, parent);
-		//TextView convert = (TextView) view.getChildView(groupId, itemId, false, v, parent).findViewById(R.id.lblListItem);
-		//TextView convert = (TextView)itemView.findViewById(R.id.lblListItem);
-		View itemView = parent.getChildAt(groupId);
-	
-		itemView.setBackgroundColor(Color.GREEN);
-		
-		listDataHeader.get(groupId);
-	
+	public int getItem(){
+		return itemId;
+	}
+	public int getGroup(){
+		return groupId;
 	}
 	
-	public void printExpandableItem(View convertView, int groupPosition, int childPosition){
-
-		TextView txtListChild = (TextView) convertView
-				.findViewById(R.id.lblListItem);
-
-
-		System.out.println(itemId + " = " + childPosition + " / " + groupId + " = " + groupPosition);
-		if(itemId == childPosition && groupId == groupPosition){;
-			txtListChild.setTypeface(null, Typeface.BOLD);
-			txtListChild.setBackgroundColor(Color.GREEN);
+	public String getGroupName(){
+		return listDataHeader.get(groupId);
+	}
+	
+	
+	public String  getItemName(){
+		String tmp;
+		if(itemId == -1){
+			tmp = "-1";
+		}else{
+			String key = listDataHeader.get(groupId);
+			List<String> value = listDataChild.get(key);
+			
+			tmp = value.get(itemId).toString();
 		}
+		return tmp;
 	}
-
 
 	@Override
 	public void printText(TextView tv1) {
 		String item;
 		String group;
 		
+		System.out.println("Med 1");
 		if(groupId == -1)
-			group = "$";
+			group = "%";
 		else
 			group = listDataHeader.get(groupId);
 		
 		if(itemId == -1)
-			item = "$";
+			item = "%";
 		else
 			item = listDataChild.get(listDataHeader.get(groupId)).get(itemId);
 		
@@ -84,16 +79,5 @@ public class Mediator implements IMediator {
 			
 		
 	}
-	
-	public void reset(){
-		
-		itemId = -1;
-			
-	}
-	
-	
-
-
-
 
 }

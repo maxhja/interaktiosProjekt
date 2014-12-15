@@ -2,12 +2,15 @@ package com.example.lab2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -24,9 +27,10 @@ public class MainActivity extends Activity {
 	ExpandableListView expListView;
 	List<String> listDataHeader;
 	HashMap<String, List<String>> listDataChild;
+	EditText textMessage;
 
 	Mediator med;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,10 +40,9 @@ public class MainActivity extends Activity {
 		// get the listview
 		expListView = (ExpandableListView) findViewById(R.id.lvExp);
 		//add the Search function
-		EditText textMessage = (EditText)findViewById(R.id.textMessage);
+		textMessage = (EditText)findViewById(R.id.textMessage);
 		textMessage.addTextChangedListener(new TextWatcher(){
 			public void afterTextChanged(Editable s) {
-
 
 				searchForString(s.toString());
 			}
@@ -52,7 +55,7 @@ public class MainActivity extends Activity {
 		// preparing list data
 		prepareListData();
 
-		listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+		listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild,med);
 
 		// setting list adapter
 		expListView.setAdapter(listAdapter);
@@ -62,10 +65,13 @@ public class MainActivity extends Activity {
 
 			@Override
 			public boolean onGroupClick(ExpandableListView parent, View v,
-					int groupPosition, long id) {
-				// Toast.makeText(getApplicationContext(),
-				// "Group Clicked " + listDataHeader.get(groupPosition),
-				// Toast.LENGTH_SHORT).show();
+				int groupPosition, long id) {
+				
+				med.setGroup(groupPosition);
+				med.setItem(-1);
+				TextView tv1 = (TextView)findViewById(R.id.textMessage);
+				med.printText(tv1);
+				listAdapter.notifyDataSetChanged();
 				return false;
 			}
 		});
@@ -76,13 +82,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onGroupExpand(int groupPosition) {
 
-				med.setGroup(groupPosition);
-				med.setItem(-1);
-				TextView tv1 = (TextView)findViewById(R.id.textMessage);
-				med.printText(tv1);
-				//				Toast.makeText(getApplicationContext(),
-				//						listDataHeader.get(groupPosition) + " Expanded",
-				//						Toast.LENGTH_SHORT).show();
+				
 			}
 		});
 
@@ -91,18 +91,12 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onGroupCollapse(int groupPosition) {
-
-
-				med.setGroup(-1);
-				med.setItem(-1);
 				TextView tv1 = (TextView)findViewById(R.id.textMessage);
+				med.setItem(-1);
+				med.setGroup(-1);
 				med.printText(tv1);
-				med.reset();
-
-				//				Toast.makeText(getApplicationContext(),
-				//						listDataHeader.get(groupPosition) + " Collapsed",
-				//						Toast.LENGTH_SHORT).show();
-
+				
+				listAdapter.notifyDataSetChanged();
 			}
 		});
 
@@ -112,148 +106,83 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
-				// TODO Auto-generated method stub
-				TextView tv1 = (TextView)findViewById(R.id.textMessage);
-				med.reset();
+				
+				TextView tv1 = (TextView) findViewById(R.id.textMessage);
+				
+				
 				med.setGroup(groupPosition);
 				med.setItem(childPosition);
-
 				med.printText(tv1);
-				med.printExpandableItem(v,groupPosition,childPosition);
+							
+				listAdapter.notifyDataSetChanged();
 
-
-				//				TextView tv1 = (TextView)findViewById(R.id.textMessage);
-				//				tv1.setText(listDataHeader.get(groupPosition)+"/" + listDataChild.get(
-				//						listDataHeader.get(groupPosition)).get(
-				//						childPosition));
-
-
-				Toast.makeText(
-						getApplicationContext(),
-						listDataHeader.get(groupPosition)
-						+ " : "
-						+ listDataChild.get(
-								listDataHeader.get(groupPosition)).get(
-										childPosition), Toast.LENGTH_SHORT)
-										.show();
+				
 				return false;
 			}
 		});
 	}
 
 	/*
-	 * Preparing the list data
+	 * SEE IF THE SEARCHWORD CONTAINS IN THE EXPANDABLELSIT
 	 */
-
+	int group = 0;
+	boolean check = false;
+	int checkLength = 0;
 	private void searchForString(String s){
+		
+		String newS = s.toLowerCase();
+		String[] userInput =  newS.split("\\/");
+		
+		int headerpos = -1;
+		int groupID=-1;
 
-
-		String[] userInput=  s.split("\\/");
-
-		Boolean hasChildren = false;
-
-		//has substring?
-
-		if(userInput.length>1){
-
-
-			hasChildren=true;
-
-		}
-
-		else
-
-			hasChildren=false;
-
-
-
-		int headerPos = 0;
-
-//		System.out.println("--------------------------------ny SÖK sträng-----------------");
-
-		for (String key : listDataChild.keySet()){
-
-			//check header for match
-
-			boolean match = false;
-
-			for (int i = 0; i < Math.min(Math.min(userInput[0].length(), 3), key.length()); i++) {
-
-				if (key.charAt(i) != userInput[0].charAt(i)) {
-
-					match = false;
-
-					break;
-				}
-
-				else{
-
-					if(userInput.length>1){
-
-						match = true;
-
-					}
-
-					else{
-
-						//call mediator
-
-						match = false;
-
-					}
-				}
-
+		textMessage.setBackgroundColor(Color.WHITE);
+		for(String key : listDataHeader){
+			String newK = key.toLowerCase(Locale.getDefault());
+			headerpos++;
+			if(newK.equals(userInput[0])){
+				groupID = headerpos;
+				check = true;
+				checkLength = newK.length();
+				textMessage.setBackgroundColor(Color.WHITE);
 			}
-
-			//check all children
-
-			if(match==true){
-
-				int sizeOfChildrenCurrentChildrenList =listDataChild.get(listDataHeader.get(headerPos)).size();
-
-				for(int i=0; i<sizeOfChildrenCurrentChildrenList; i++){
-
-					String currentName =listDataChild.get(listDataHeader.get(headerPos)).get(i);
-
-					//System.out.println("currentName: "+currentName+ " - headerpos: "+headerPos+"sizeof child: "+sizeOfChildrenCurrentChildrenList);
-					for (int j = 0; j < Math.min(Math.min(userInput[1].length(), 3), currentName.length()); j++) {
-
-						if (currentName.charAt(Math.abs(j)) != userInput[1].charAt(Math.abs(j))) {
-
-							match = false;
-
-//		System.out.println("FAIL TO MATCH header: "+headerPos+" child: "+i);
-
-						}
-
-						else{
-
-//							System.out.println("***substring MATCH at header: "+headerPos + "-and child: "+i+"**");
-//
-//							System.out.println(userInput[1]);
-//
-//							System.out.println("MATCH header: "+headerPos+" child: "+i);
-//
-//							System.out.println("Correct match header: "+headerPos+" child: "+i +  " key " +key + " currentName: " +currentName);
-//
-//							//call mediator
-							
-							med.setGroup(headerPos);
-							med.setItem(i);
-							View v = null;
-							
-							
-							med.printExpandable(listAdapter,v, expListView );
-							//med.printExpandableItem(convertView, groupPosition, childPosition)
-
-						}
-					}
-				}
+			if(check  &&  checkLength < userInput[0].length()){
+				textMessage.setBackgroundColor(Color.RED);
 			}
+				
+		}		
+	
+		int childID = -1;
+	
+		String[] temp = null;
+		int counter = 0;
+		int childPos = -1 ;
 
-			++headerPos;
-
+		if(groupID > -1){ //check if it has parent
+			
+			for(String strChild : listDataChild.get(listDataHeader.get(groupID))){
+					
+				String newStr = strChild.toLowerCase();
+				childPos++;
+			
+				if(newStr.contains(userInput[userInput.length-1])){
+					childID = childPos;
+					med.setGroup(groupID);
+					med.setItem(childID);
+					expListView.expandGroup(groupID);
+					listAdapter.notifyDataSetChanged();
+						
+				}
+			}				
 		}
+	}
+	
+	public boolean contains( String haystack, String needle ) {
+		  haystack = haystack == null ? "" : haystack;
+		  needle = needle == null ? "" : needle;
+		  // Works, but is not the best.
+		  //return haystack.toLowerCase().indexOf( needle.toLowerCase() ) > -1
+		  return haystack.toLowerCase().contains( needle.toLowerCase() );
 	}
 
 	private void prepareListData() {
@@ -266,29 +195,28 @@ public class MainActivity extends Activity {
 		listDataHeader.add("Dark");
 
 		// Adding child data
-		List<String> top250 = new ArrayList<String>();
-		top250.add("green");
-		top250.add("yellow");
-		top250.add("red");
-		top250.add("blue");
+		List<String> light = new ArrayList<String>();
+		light.add("green");
+		light.add("yellow");
+		light.add("red");
+		light.add("blue");
 
 
-		List<String> nowShowing = new ArrayList<String>();
-		nowShowing.add("green");
-		nowShowing.add("yellow");
-		nowShowing.add("red");
-		nowShowing.add("blue");
-		nowShowing.add("red");
+		List<String> medium = new ArrayList<String>();
+		medium.add("green");
+		medium.add("yellow");
+		medium.add("blue");
+		medium.add("red");
 
 
-		List<String> comingSoon = new ArrayList<String>();
-		comingSoon.add("black");
-		comingSoon.add("yellow");
-		comingSoon.add("red");
+		List<String> dark = new ArrayList<String>();
+		dark.add("black");
+		dark.add("yellow");
+		dark.add("red");
 
-		listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-		listDataChild.put(listDataHeader.get(1), nowShowing);
-		listDataChild.put(listDataHeader.get(2), comingSoon);
+		listDataChild.put(listDataHeader.get(0), light); // Header, Child data
+		listDataChild.put(listDataHeader.get(1), medium);
+		listDataChild.put(listDataHeader.get(2), dark);
 
 		med = new Mediator(listDataHeader, listDataChild);
 	}

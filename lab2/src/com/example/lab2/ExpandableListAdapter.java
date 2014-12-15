@@ -17,15 +17,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private Context _context;
 	private List<String> _listDataHeader; // header titles
 	
-//	Mediator med = new Mediator();
-	// child data in format of header title, child title
+	Mediator med;
+
 	private HashMap<String, List<String>> _listDataChild;
 
 	public ExpandableListAdapter(Context context, List<String> listDataHeader,
-			HashMap<String, List<String>> listChildData) {
+			HashMap<String, List<String>> listChildData, Mediator medi) {
 		this._context = context;
 		this._listDataHeader = listDataHeader;
 		this._listDataChild = listChildData;
+		med = medi;
+	
 	}
 
 	@Override
@@ -38,6 +40,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
+	int i = 0;
 
 	@Override
 	public View getChildView(int groupPosition, final int childPosition,
@@ -49,10 +52,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 			LayoutInflater infalInflater = (LayoutInflater) this._context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.list_item, null);
+			
 		}
-		
+
 		TextView txtListChild = (TextView) convertView
-				.findViewById(R.id.lblListItem);
+				.findViewById(R.id.lblListItem); 
+				
+		String child = med.getItemName();
+		String group = (String) getGroup(groupPosition);
+
+		if(child != "-1"){
+			if(child.equals(childText) && group.equals(med.getGroupName()) ){
+				txtListChild.setBackgroundColor(Color.GREEN);
+			}else
+				txtListChild.setBackgroundColor(Color.WHITE);
+		}else
+			txtListChild.setBackgroundColor(Color.WHITE);
+		
 
 		txtListChild.setText(childText);
 	
@@ -89,9 +105,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.list_group, null);
 		}
-		
-	//	med.setGroup(headerTitle);
-	//	med.printExpandableGroup(convertView);
+
 
 		TextView lblListHeader = (TextView) convertView
 				.findViewById(R.id.lblListHeader);
@@ -111,5 +125,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
+
+
 
 }
