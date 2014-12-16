@@ -2270,3 +2270,96 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.ui 2 2 2014-12-16 08:39:00.270
 !MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
+
+!ENTRY org.eclipse.egit.core 4 0 2014-12-16 08:39:34.634
+!MESSAGE An exception occurred during push on URI https://github.com/maxhja/interaktionsprogrammering.git: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:157)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI.execute(PushOperationUI.java:147)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI$1.run(PushOperationUI.java:209)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.jgit.errors.TransportException: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:476)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:395)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:130)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1162)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:153)
+	... 4 more
+
+!ENTRY org.eclipse.egit.core 4 0 2014-12-16 08:40:33.125
+!MESSAGE An exception occurred during push on URI https://github.com/maxhja/interaktionsprogrammering.git: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:157)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI.execute(PushOperationUI.java:147)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI$1.run(PushOperationUI.java:209)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.jgit.errors.TransportException: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:476)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:395)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:130)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1162)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:153)
+	... 4 more
+
+!ENTRY org.eclipse.egit.core 4 0 2014-12-16 08:42:25.198
+!MESSAGE An exception occurred during push on URI git://github.com/maxhja/interaktionsprogrammering.git: git://github.com/maxhja/interaktionsprogrammering.git: 
+  You can't push to git://github.com/maxhja/interaktionsprogrammering.git
+  Use https://github.com/maxhja/interaktionsprogrammering.git
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: git://github.com/maxhja/interaktionsprogrammering.git: 
+  You can't push to git://github.com/maxhja/interaktionsprogrammering.git
+  Use https://github.com/maxhja/interaktionsprogrammering.git
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:157)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI.execute(PushOperationUI.java:147)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI$1.run(PushOperationUI.java:209)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.jgit.errors.RemoteRepositoryException: git://github.com/maxhja/interaktionsprogrammering.git: 
+  You can't push to git://github.com/maxhja/interaktionsprogrammering.git
+  Use https://github.com/maxhja/interaktionsprogrammering.git
+	at org.eclipse.jgit.transport.BasePackConnection.readAdvertisedRefsImpl(BasePackConnection.java:207)
+	at org.eclipse.jgit.transport.BasePackConnection.readAdvertisedRefs(BasePackConnection.java:176)
+	at org.eclipse.jgit.transport.TransportGitAnon$TcpPushConnection.<init>(TransportGitAnon.java:224)
+	at org.eclipse.jgit.transport.TransportGitAnon.openPush(TransportGitAnon.java:116)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:130)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1162)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:153)
+	... 4 more
+
+!ENTRY org.eclipse.egit.core 4 0 2014-12-16 08:43:04.158
+!MESSAGE An exception occurred during push on URI http://www.github.com/maxhja/interaktionsprogrammering.git: http://www.github.com/maxhja/interaktionsprogrammering.git: 301 Moved Permanently
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: http://www.github.com/maxhja/interaktionsprogrammering.git: 301 Moved Permanently
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:157)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI.execute(PushOperationUI.java:147)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI$1.run(PushOperationUI.java:209)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.jgit.errors.TransportException: http://www.github.com/maxhja/interaktionsprogrammering.git: 301 Moved Permanently
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:488)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:395)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:130)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1162)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:153)
+	... 4 more
+
+!ENTRY org.eclipse.egit.core 4 0 2014-12-16 08:44:05.991
+!MESSAGE An exception occurred during push on URI https://github.com/maxhja/interaktionsprogrammering.git: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:157)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI.execute(PushOperationUI.java:147)
+	at org.eclipse.egit.ui.internal.push.PushOperationUI$1.run(PushOperationUI.java:209)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.jgit.errors.TransportException: https://github.com/maxhja/interaktionsprogrammering.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:476)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:395)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:130)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1162)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:153)
+	... 4 more
